@@ -10,9 +10,9 @@
         <description>Low-level pub/sub messaging for HOLMS</description>
         <copyright>Copyright © shortbar</copyright>
         <dependencies>
-            <dependency id="Google.Protobuf" version="3.0.0" targetFramework="net452" />
-            <dependency id="log4net" version="2.0.5" targetFramework="net452" />
-            <dependency id="RabbitMQ.Client" version="3.6.1" targetFramework="net452" />
+            <dependency id="Google.Protobuf" version="3.0.0" />
+            <dependency id="log4net" version="2.0.5" />
+            <dependency id="RabbitMQ.Client" version="3.6.1" />
         </dependencies>
     </metadata>
 </package>
