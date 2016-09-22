@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>HOLMS.Messaging</id>
@@ -7,7 +7,7 @@
         <authors>shortbar</authors>
         <owners>shortbar</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Messaging via RabbitMQ</description>
+        <description>Low-level pub/sub messaging for HOLMS</description>
         <copyright>Copyright © shortbar</copyright>
         <dependencies>
             <dependency id="Google.Protobuf" version="3.0.0" />
