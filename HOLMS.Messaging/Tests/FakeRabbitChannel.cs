@@ -19,7 +19,7 @@ namespace HOLMS.Messaging.Tests {
         }
 
         public IMessageListener CreateListenerForTopics(MessageListener.MessageReceivedHandler h, string[] topics) {
-            throw new System.NotImplementedException();
+            return new FakeMessageListener();
         }
 
         public void Close() {

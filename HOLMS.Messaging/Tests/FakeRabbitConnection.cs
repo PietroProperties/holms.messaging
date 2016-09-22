@@ -16,6 +16,10 @@ namespace HOLMS.Messaging.Tests {
             return _allocatedChannels[allocatedIdx];
         }
 
+        public List<FakeRabbitChannel> GetChannels() {
+            return _allocatedChannels;
+        }
+
         public IMessageChannel GetChannel() {
             var model = new FakeRabbitChannel();
             _allocatedChannels.Add(model);
