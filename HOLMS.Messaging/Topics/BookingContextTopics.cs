@@ -6,6 +6,5 @@
         public const string ReservationCheckInTopic = "booking.reservations.checkins";
         public const string ReservationFRPAmendment = "bookings.reservations.frp_amendment";
         public const string ReservationGuaranteedWithCheck = "bookings.reservations.guarantees.check";
-        public const string ReservationAccruals = "bookings.reservations.accruals";
     }
 }
