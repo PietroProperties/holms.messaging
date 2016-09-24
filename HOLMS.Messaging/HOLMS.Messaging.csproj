@@ -60,11 +60,6 @@
     <Compile Include="Tests\FakeRabbitChannel.cs" />
     <Compile Include="Tests\FakeRabbitConnectionFactory.cs" />
     <Compile Include="Tests\RecordedPublication.cs" />
-    <Compile Include="Topics\MoneyContextTopics.cs" />
-    <Compile Include="Topics\BookingContextTopics.cs" />
-    <Compile Include="Topics\OperationsContextTopics.cs" />
-    <Compile Include="Topics\PBXConnectorTopics.cs" />
-    <Compile Include="Topics\SupplyContextTopics.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
