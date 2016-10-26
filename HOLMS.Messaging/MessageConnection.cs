@@ -1,14 +1,14 @@
-﻿using log4net;
+﻿using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 
 namespace HOLMS.Messaging {
     public class MessageConnection : IMessageConnection {
         public const string ExchangeName = "holms";
 
-        private readonly ILog _log;
+        private readonly ILogger _log;
         private readonly IConnection _cn;
 
-        internal MessageConnection(ILog l, IConnection cn) {
+        internal MessageConnection(ILogger l, IConnection cn) {
             _cn = cn;
             _log = l;
         }

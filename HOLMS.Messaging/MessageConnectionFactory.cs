@@ -1,13 +1,13 @@
-﻿using log4net;
+﻿using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 
 namespace HOLMS.Messaging {
     public class MessageConnectionFactory : IMessageConnectionFactory {
-        private readonly ILog _l;
+        private readonly ILogger _l;
         private readonly ConnectionFactory _rabbitcf;
         public string Hostname { get; }
 
-        public MessageConnectionFactory(ILog l, string hostname) {
+        public MessageConnectionFactory(ILogger l, string hostname) {
             _l = l;
             Hostname = hostname;
             _rabbitcf = new ConnectionFactory { HostName = hostname };

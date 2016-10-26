@@ -1,13 +1,13 @@
 ﻿using Google.Protobuf;
-using log4net;
+using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 
 namespace HOLMS.Messaging {
     public class MessageChannel : IMessageChannel {
-        private readonly ILog _l;
+        private readonly ILogger _l;
         private readonly IModel _m;
 
-        internal MessageChannel(ILog l, IModel m) {
+        internal MessageChannel(ILogger l, IModel m) {
             _l = l;
             _m = m;
         }

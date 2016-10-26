@@ -1,10 +1,10 @@
-﻿using log4net;
+﻿using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
 namespace HOLMS.Messaging {
     public class MessageListener : IMessageListener {
-        private readonly ILog _log;
+        private readonly ILogger _log;
         private readonly IModel _m;
         private readonly string[] _topics;
 
@@ -13,7 +13,7 @@ namespace HOLMS.Messaging {
         public delegate void MessageReceivedHandler(string routingKey, byte[] msg);
         public event MessageReceivedHandler MessageReceived;
 
-        internal MessageListener(ILog l, IModel m, string[] topics) {
+        internal MessageListener(ILogger l, IModel m, string[] topics) {
             _log = l;
             _m = m;
             _topics = topics;
@@ -35,7 +35,7 @@ namespace HOLMS.Messaging {
         }   
 
         public void Stop() {
-            _log.Info("Closing RabbitMQ connection");
+            _log.LogInformation("Closing RabbitMQ connection");
             _bc.Received -= OnMessage;
         }
 
