@@ -7,10 +7,14 @@ namespace HOLMS.Messaging {
         private readonly ConnectionFactory _rabbitcf;
         public string Hostname { get; }
 
-        public MessageConnectionFactory(ILogger l, string hostname) {
+        public MessageConnectionFactory(ILogger l, string hostname, string username, string password) {
             _l = l;
             Hostname = hostname;
-            _rabbitcf = new ConnectionFactory { HostName = hostname };
+            _rabbitcf = new ConnectionFactory {
+                HostName = hostname,
+                UserName = username,
+                Password = password,
+            };
         }
 
         public IMessageConnection OpenConnection() {
