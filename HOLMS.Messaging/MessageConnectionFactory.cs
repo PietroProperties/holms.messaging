@@ -7,14 +7,21 @@ namespace HOLMS.Messaging {
         private readonly ConnectionFactory _rabbitcf;
         public string Hostname { get; }
 
-        public MessageConnectionFactory(ILogger l, string hostname, string username, string password) {
+        public MessageConnectionFactory(ILogger l, string hostname, string username = null, string password = null) {
             _l = l;
             Hostname = hostname;
             _rabbitcf = new ConnectionFactory {
                 HostName = hostname,
-                UserName = username,
-                Password = password,
             };
+            //It appears that using the setter at all, even if the argument is null,
+            //attempts to use the credentials. Instead, we ensure that the properties
+            //are only set when they are not null
+            if (username != null) {
+                _rabbitcf.UserName = username;
+            }
+            if (password != null) {
+                _rabbitcf.Password = password;
+            }
         }
 
         public IMessageConnection OpenConnection() {
