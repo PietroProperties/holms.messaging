@@ -15,4 +15,7 @@
             <dependency id="RabbitMQ.Client" version="4.1.0" />
         </dependencies>
     </metadata>
+  <files>
+    <file src="bin\Debug\HOLMS.Messaging.dll" target="lib\net46\HOLMS.Messaging.dll"/>
+  </files>
 </package>
