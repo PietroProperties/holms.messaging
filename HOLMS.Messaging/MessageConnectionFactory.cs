@@ -7,23 +7,24 @@ namespace HOLMS.Messaging {
         private readonly ConnectionFactory _rabbitcf;
         public string Hostname { get; }
 
-        public MessageConnectionFactory(ILogger l, string hostname, string username, string password, string vhost) {
+        public MessageConnectionFactory(ILogger l, RabbitConfiguration connectionConfig) {
             _l = l;
-            Hostname = hostname;
+            Hostname = connectionConfig.Host;
             _rabbitcf = new ConnectionFactory {
-                HostName = hostname,
+                HostName = connectionConfig.Host,
+                Port = connectionConfig.Port,
             };
             //It appears that using the setter at all, even if the argument is null,
             //attempts to use the value. Instead, we ensure that the properties
             //are only set when they are not null
-            if (username != null) {
-                _rabbitcf.UserName = username;
+            if (connectionConfig.User != null) {
+                _rabbitcf.UserName = connectionConfig.User;
             }
-            if (password != null) {
-                _rabbitcf.Password = password;
+            if (connectionConfig.Password != null) {
+                _rabbitcf.Password = connectionConfig.Password;
             }
-            if (vhost != null) {
-                _rabbitcf.VirtualHost = vhost;
+            if (connectionConfig.VHost != null) {
+                _rabbitcf.VirtualHost = connectionConfig.VHost;
             }
         }
 
