@@ -1,34 +1,32 @@
 ﻿using System;
 
 namespace HOLMS.Messaging {
-    public class RabbitConfiguration {
+    public class MessagingConfiguration {
         public string Host { get; protected set; }
         public ushort Port { get; protected set; }
         public string User { get; protected set; }
         public string Password { get; protected set; }
         public string VHost { get; protected set; }
 
-        public RabbitConfiguration(string connectionString) {
+        public MessagingConfiguration(string connectionString) {
             //example: amqp://user:pass@hostname:port/vhost
-            int protocolEndIndex = connectionString.IndexOf("://");
-            if (protocolEndIndex == -1) {
+            var protocolSplit = connectionString.Split(new string[] { "://" }, 2, StringSplitOptions.None);
+            if (protocolSplit.Length != 2) {
                 throw new ArgumentException($"No protocol specified in string {connectionString}");
             }
-            var protocol = connectionString.Substring(0, protocolEndIndex);
+            var protocol = protocolSplit[0];
             if (protocol != "amqp" && protocol != "amqps") {
                 throw new ArgumentException($"Invalid protocol {protocol}");
             }
-            var connection = connectionString.Substring(protocolEndIndex + "://".Length);
+            var connection = protocolSplit[1];
             if (connection.Contains("@")) {
-                var credentials = connection.Split('@')[0].Split(':');
-                User = credentials[0];
-                if (credentials.Length > 1) {
-                    Password = credentials[1];
+                var allCredentials = connection.Split('@')[0].Split(new string[] { ":" }, 2, StringSplitOptions.None);
+                //Allow colons in password, just not in username
+                User = allCredentials[0];
+                if (allCredentials.Length > 1) {
+                    Password = allCredentials[1];
                 }
-                if (credentials.Length > 2) {
-                    throw new ArgumentException($"Invalid field following password: {credentials[2]}. (Note: username / password may not contain a ':'");
-                }
-                //strip the credentials from the string. Assumes only one "@" in the entire string
+                //strip the credentials from the string. Assumes only one "@" in the entire string, and it can't be in the password
                 connection = connection.Split('@')[1];
             }
             var lastColon = connection.LastIndexOf(':');
@@ -37,7 +35,7 @@ namespace HOLMS.Messaging {
             
             ushort tcpPort;
             if (!ushort.TryParse(portAndVHost[0], out tcpPort)) {
-                throw new ArgumentException($"Failed to parse PBXConnectionString port {tcpPort} as valid port number (integer between 1 and 65535");
+                throw new ArgumentException($"Failed to parse messaging port {tcpPort} as valid port number (integer between 1 and 65535");
             }
             Port = tcpPort;
 

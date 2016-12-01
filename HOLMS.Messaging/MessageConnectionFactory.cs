@@ -7,7 +7,7 @@ namespace HOLMS.Messaging {
         private readonly ConnectionFactory _rabbitcf;
         public string Hostname { get; }
 
-        public MessageConnectionFactory(ILogger l, RabbitConfiguration connectionConfig) {
+        public MessageConnectionFactory(ILogger l, MessagingConfiguration connectionConfig) {
             _l = l;
             Hostname = connectionConfig.Host;
             _rabbitcf = new ConnectionFactory {

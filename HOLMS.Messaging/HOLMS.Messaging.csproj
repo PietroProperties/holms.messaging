@@ -59,8 +59,8 @@
     <Compile Include="MessageListener.cs" />
     <Compile Include="MessageSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RabbitConfiguration.cs" />
-    <Compile Include="RabbitConfigurationTests.cs" />
+    <Compile Include="MessagingConfiguration.cs" />
+    <Compile Include="MessagingConfigurationTests.cs" />
     <Compile Include="Tests\FakeMessageListener.cs" />
     <Compile Include="Tests\FakeRabbitConnection.cs" />
     <Compile Include="Tests\FakeRabbitChannel.cs" />
