@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Runtime.Remoting.Channels;
+using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 
 namespace HOLMS.Messaging {
@@ -25,6 +26,9 @@ namespace HOLMS.Messaging {
             }
             if (connectionConfig.VHost != null) {
                 _rabbitcf.VirtualHost = connectionConfig.VHost;
+            }
+            if (connectionConfig.Protocol == RabbitProtocol.AmqpS) {
+                _rabbitcf.Ssl = new SslOption(System.Net.Dns.GetHostName(), enabled: true);
             }
         }
 

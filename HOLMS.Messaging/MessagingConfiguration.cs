@@ -1,12 +1,18 @@
 ﻿using System;
 
 namespace HOLMS.Messaging {
+    public enum RabbitProtocol {
+        Amqp,
+        AmqpS
+    }
+
     public class MessagingConfiguration {
         public string Host { get; protected set; }
         public ushort Port { get; protected set; }
         public string User { get; protected set; }
         public string Password { get; protected set; }
         public string VHost { get; protected set; }
+        public RabbitProtocol Protocol { get; protected set; }
 
         public MessagingConfiguration(string connectionString) {
             //example: amqp://user:pass@hostname:port/vhost
@@ -14,10 +20,16 @@ namespace HOLMS.Messaging {
             if (protocolSplit.Length != 2) {
                 throw new ArgumentException($"No protocol specified in string {connectionString}");
             }
-            var protocol = protocolSplit[0];
-            if (protocol != "amqp" && protocol != "amqps") {
+
+            var protocol = protocolSplit[0].ToLower();
+            if (protocol == "amqp") {
+                Protocol = RabbitProtocol.Amqp;
+            } else if (protocol == "amqps") {
+                Protocol = RabbitProtocol.AmqpS;
+            } else {
                 throw new ArgumentException($"Invalid protocol {protocol}");
             }
+
             var connection = protocolSplit[1];
             if (connection.Contains("@")) {
                 var allCredentials = connection.Split('@')[0].Split(new string[] { ":" }, 2, StringSplitOptions.None);
