@@ -17,7 +17,15 @@ namespace HOLMS.Messaging {
                 topic, null, msg.ToByteArray());
         }
 
-        public IMessageListener CreateListenerForTopics(MessageListener.MessageReceivedHandler h,
+        public IMessageListener BindSharedQueue(MessageListener.MessageReceivedHandler h, string[] topics,
+                string queueName) {
+            var ml = new MessageListener(_l, _m, topics, queueName);
+            ml.MessageReceived += h;
+
+            return ml;
+        }
+
+        public IMessageListener BindPrivateQueue(MessageListener.MessageReceivedHandler h,
                 string[] topics) {
             var ml = new MessageListener(_l, _m, topics);
             ml.MessageReceived += h;

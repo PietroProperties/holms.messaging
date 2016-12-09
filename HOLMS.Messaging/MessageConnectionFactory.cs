@@ -1,5 +1,4 @@
 ﻿using System.Net.Security;
-using System.Runtime.Remoting.Channels;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 
