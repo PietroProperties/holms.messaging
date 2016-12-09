@@ -18,7 +18,11 @@ namespace HOLMS.Messaging.Tests {
             Publication?.Invoke(topic, msg);
         }
 
-        public IMessageListener CreateListenerForTopics(MessageListener.MessageReceivedHandler h, string[] topics) {
+        public IMessageListener BindSharedQueue(MessageListener.MessageReceivedHandler h, string[] topics, string queueName) {
+            return new FakeMessageListener();
+        }
+
+        public IMessageListener BindPrivateQueue(MessageListener.MessageReceivedHandler h, string[] topics) {
             return new FakeMessageListener();
         }
 

@@ -7,20 +7,30 @@ namespace HOLMS.Messaging {
         private readonly ILogger _log;
         private readonly IModel _m;
         private readonly string[] _topics;
+        private readonly string _queueName;
 
         private EventingBasicConsumer _bc;
 
         public delegate void MessageReceivedHandler(string routingKey, byte[] msg);
         public event MessageReceivedHandler MessageReceived;
 
-        internal MessageListener(ILogger l, IModel m, string[] topics) {
+        internal MessageListener(ILogger l, IModel m, string[] topics, string queueName = "") {
             _log = l;
             _m = m;
             _topics = topics;
+            _queueName = queueName;
         }
 
         public void Start() {
-            var queue = _m.QueueDeclare();
+            QueueDeclareOk queue;
+            if (_queueName == string.Empty) {
+                // Private, throwaway queue
+                queue = _m.QueueDeclare(string.Empty, false, true, false);
+            } else {
+                // Shared queue. Durable, used for HA
+                queue = _m.QueueDeclare(_queueName, true, false, false);
+            }
+
             foreach (var topic in _topics) {
                 _m.QueueBind(queue.QueueName, MessageConnection.ExchangeName, topic);
             }

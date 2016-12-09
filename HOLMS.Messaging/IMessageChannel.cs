@@ -3,7 +3,9 @@
 namespace HOLMS.Messaging {
     public interface IMessageChannel {
         void Publish(string topic, IMessage msg);
-        IMessageListener CreateListenerForTopics(MessageListener.MessageReceivedHandler h,
+        IMessageListener BindSharedQueue(MessageListener.MessageReceivedHandler h,
+            string[] topics, string queueName);
+        IMessageListener BindPrivateQueue(MessageListener.MessageReceivedHandler h,
             string[] topics);
         void Close();
     }
