@@ -1,9 +1,11 @@
-﻿using System.Net.Security;
+﻿using System;
+using System.Net.Security;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 
 namespace HOLMS.Messaging {
     public class MessageConnectionFactory : IMessageConnectionFactory {
+        private readonly TimeSpan _reconnectionDelay = new TimeSpan(0, 0, 0, 30);
         private readonly ILogger _l;
         private readonly ConnectionFactory _rabbitcf;
         public string Hostname { get; }
@@ -35,8 +37,21 @@ namespace HOLMS.Messaging {
         }
 
         public IMessageConnection OpenConnection() {
-            var cn = _rabbitcf.CreateConnection();
-            return new MessageConnection(_l, cn);
+            Exception ex = null;
+
+            for (int i = 0; i < 5; ++i) {
+                try {
+                    var cn = _rabbitcf.CreateConnection();
+                    return new MessageConnection(_l, cn);
+                }
+                catch (RabbitMQ.Client.Exceptions.BrokerUnreachableException innerEx) {
+                    _l.LogWarning($"Connecting to RabbitMQ: Failure in attempt {i}/5, will reconnect in 30 seconds");
+                    System.Threading.Thread.Sleep(_reconnectionDelay);
+                    ex = innerEx;
+                }
+            }
+
+            throw ex;
         }
     }
 }
