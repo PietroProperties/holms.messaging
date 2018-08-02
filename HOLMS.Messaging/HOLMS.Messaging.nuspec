@@ -16,6 +16,6 @@
         </dependencies>
     </metadata>
   <files>
-    <file src="bin\Debug\HOLMS.Messaging.dll" target="lib\net46\HOLMS.Messaging.dll"/>
+    <file src="bin\Debug\net471\HOLMS.Messaging.dll" target="lib\net471\HOLMS.Messaging.dll"/>
   </files>
 </package>
