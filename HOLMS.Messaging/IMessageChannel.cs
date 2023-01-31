@@ -1,7 +1,10 @@
 ﻿using Google.Protobuf;
+using System;
 
-namespace HOLMS.Messaging {
-    public interface IMessageChannel {
+namespace HOLMS.Messaging
+{
+    public interface IMessageChannel : IDisposable
+    {
         void Publish(string topic, IMessage msg);
         IMessageListener BindSharedQueue(MessageListener.MessageReceivedHandler h,
             string[] topics, string queueName);

@@ -29,5 +29,8 @@ namespace HOLMS.Messaging.Tests {
         public void Close() {
             IsOpen = false;
         }
+        public void Dispose() {
+            IsOpen = false;
+        }
     }
 }
