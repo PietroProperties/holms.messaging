@@ -1,0 +1,32 @@
+name: Build and Publish NuGet Package (.NET Framework 4.7.1)
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Custom version number (e.g., 1.0.0.1234)'
+        required: true
+        default: '1.0.0.43'
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v2
+
+    - name: Restore NuGet packages
+      run: nuget restore HOLMS.Messaging/HOLMS.Messaging.csproj
+
+    - name: Build project using MSBuild
+      run: msbuild HOLMS.Messaging/HOLMS.Messaging.csproj /p:Configuration=Release
+
+    - name: Pack NuGet package
+      run: nuget pack HOLMS.Messaging/HOLMS.Messaging.csproj -Version ${{ github.event.inputs.version }} -OutputDirectory ./nupkg
+
+    - name: Push to MyGet
+      run: nuget push ./nupkg/*.nupkg -Source https://www.myget.org/F/shortbar-holms/api/v2/package -ApiKey 9ccdc610-2160-4720-a558-79563feaa449
