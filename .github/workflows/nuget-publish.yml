@@ -6,7 +6,7 @@ on:
       version:
         description: 'Custom version number (e.g., 1.0.0.1234)'
         required: true
-        default: '1.0.0.43'
+        default: '1.0.43'
 
 jobs:
   build:
@@ -20,14 +20,14 @@ jobs:
       uses: NuGet/setup-nuget@v2
 
     - name: Restore NuGet packages
-      run: nuget restore HOLMS.Messaging/HOLMS.Messaging.csproj
+      run: nuget restore HOLMS.Messaging\HOLMS.Messaging.csproj
 
     - name: Build project using MSBuild
       shell: cmd
       run: '"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe" HOLMS.Messaging\HOLMS.Messaging.csproj /p:Configuration=Release'
 
-    - name: Pack NuGet package
-      run: nuget pack HOLMS.Messaging/HOLMS.Messaging.csproj -Version ${{ github.event.inputs.version }} -OutputDirectory ./nupkg
+    - name: Pack NuGet package using .nuspec
+      run: nuget pack HOLMS.Messaging\HOLMS.Messaging.nuspec -Version ${{ github.event.inputs.version }} -OutputDirectory ./nupkg
 
     - name: Push to MyGet
       run: nuget push ./nupkg/*.nupkg -Source https://www.myget.org/F/shortbar-holms/api/v2/package -ApiKey 9ccdc610-2160-4720-a558-79563feaa449
