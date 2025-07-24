@@ -22,8 +22,10 @@ jobs:
     - name: Restore NuGet packages
       run: nuget restore HOLMS.Messaging/HOLMS.Messaging.csproj
 
+
     - name: Build project using MSBuild
-      run: msbuild HOLMS.Messaging/HOLMS.Messaging.csproj /p:Configuration=Release
+      run: '"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe" HOLMS.Messaging/HOLMS.Messaging.csproj /p:Configuration=Release'
+
 
     - name: Pack NuGet package
       run: nuget pack HOLMS.Messaging/HOLMS.Messaging.csproj -Version ${{ github.event.inputs.version }} -OutputDirectory ./nupkg
